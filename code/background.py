@@ -1,5 +1,6 @@
 import pygame
 from code.settings import WIN_WIDTH, WIN_HEIGHT, C_SKY
+from code.sprite_loader import resource_path
 
 
 class Background:
@@ -17,7 +18,7 @@ class Background:
 
         for i in range(1, 5):
             try:
-                img = pygame.image.load(f"asset/bg_L{i}.png").convert_alpha()
+                img = pygame.image.load(resource_path(f"asset/bg_L{i}.png")).convert_alpha()
                 img = pygame.transform.scale(img, (WIN_WIDTH, WIN_HEIGHT))
                 layers.append(img)
             except FileNotFoundError:

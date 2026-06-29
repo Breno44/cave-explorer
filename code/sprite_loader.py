@@ -1,4 +1,12 @@
+import sys
+import os
 import pygame
+
+
+def resource_path(relative_path: str) -> str:
+    """Resolve o caminho dos assets tanto em dev quanto dentro do .exe (PyInstaller)."""
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__ + "/..")))
+    return os.path.join(base, relative_path)
 
 
 def load_image(path: str, size: tuple, fallback_color: tuple) -> pygame.Surface:
@@ -7,7 +15,7 @@ def load_image(path: str, size: tuple, fallback_color: tuple) -> pygame.Surface:
     retorna um retângulo colorido do mesmo tamanho — o jogo nunca quebra.
     """
     try:
-        img = pygame.image.load(path).convert_alpha()
+        img = pygame.image.load(resource_path(path)).convert_alpha()
         return pygame.transform.scale(img, size)
     except FileNotFoundError:
         surf = pygame.Surface(size, pygame.SRCALPHA)
@@ -18,7 +26,7 @@ def load_image(path: str, size: tuple, fallback_color: tuple) -> pygame.Surface:
 def load_tile(path: str, tile_size: tuple, fallback_color: tuple) -> pygame.Surface:
     """Carrega um tile para ser repetido em plataformas."""
     try:
-        img = pygame.image.load(path).convert_alpha()
+        img = pygame.image.load(resource_path(path)).convert_alpha()
         return pygame.transform.scale(img, tile_size)
     except FileNotFoundError:
         surf = pygame.Surface(tile_size)
